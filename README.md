@@ -1,4 +1,4 @@
-# project-number-one
+# Описание
 Пример связки php nginx docker mysql
 
 # Перед установкой
