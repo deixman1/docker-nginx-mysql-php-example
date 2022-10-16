@@ -17,6 +17,8 @@ services:
       - ./nginx/ssl/server.key:/etc/nginx/server.key
       - ./nginx/ssl/cacert.pem:/etc/nginx/cacert.pem
       - ./../:/var/www/html
+    extra_hosts:
+      - "localhost:host-gateway"
     networks:
       - project_number_one_network
   php-fpm:
