@@ -2,3 +2,5 @@
 /.idea/
 /docker/.env
 /vendor/
+/docker/mysql/
+/docker/postgres/

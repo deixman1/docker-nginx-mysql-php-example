@@ -1,5 +1,5 @@
 server {
-    listen       8081;
+    listen       ${NGINX_LOCAL_PORT};
     server_name ${NGINX_SERVER_NAME};
 
     error_log  /var/log/nginx/error.log;

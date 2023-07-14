@@ -18,12 +18,14 @@ services:
     env_file:
       - .env
     ports:
-      - "80:8081"
-      - "443:8082"
+      - ${NGINX_EXTERNAL_PORT}:${NGINX_LOCAL_PORT}
+      - ${NGINX_SSL_EXTERNAL_PORT}:${NGINX_SSL_LOCAL_PORT}
     depends_on:
       - php-fpm
     volumes:
       - ./nginx/templates/:/etc/nginx/templates
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
       - ./../:/var/www/html
       - /etc/letsencrypt:/etc/letsencrypt
       - /var/lib/letsencrypt:/var/lib/letsencrypt
@@ -43,7 +45,7 @@ services:
     env_file:
       - .env
     ports:
-      - "9000:9000"
+      - ${PHPFPM_EXTERNAL_PORT}:${PHPFPM_LOCAL_PORT}
     volumes:
       - ./../:/var/www/html
     networks:
@@ -51,9 +53,23 @@ services:
   mysql:
     container_name: ${PROJECT_NAME}_mysql
     image: mysql
+    volumes:
+      - ./mysql:/var/lib/mysql
     env_file:
       - .env
     ports:
-      - "3306:3306"
+      - ${MYSQL_EXTERNAL_PORT}:${MYSQL_LOCAL_PORT}
     networks:
       - project_network
+#  postgres:
+#    container_name: ${PROJECT_NAME}_postgres
+#    image: postgres
+#    volumes:
+#      - ./postgres:/data/postgres
+#    restart: unless-stopped
+#    env_file:
+#      - .env
+#    ports:
+#      - ${POSTGRES_EXTERNAL_PORT}:${POSTGRES_LOCAL_PORT}
+#    networks:
+#      - project_network
